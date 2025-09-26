@@ -98,9 +98,12 @@ export function DepositPage() {
   const uploadImageToServer = async (file: File): Promise<string> => {
     const formData = new FormData()
     formData.append('receipt', file) // Changed from 'file' to 'receipt'
+
+    // Normalize base URL to avoid double slashes
+    const baseApi = (import.meta.env.VITE_API_URL || 'https://daily-earn-backend-production.up.railway.app').replace(/\/+$/, '')
     
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://easyearn-backend-production-01ac.up.railway.app'}/api/upload-deposit-receipt`, { // Using dedicated endpoint
+      const response = await fetch(`${baseApi}/api/upload-deposit-receipt`, { // Using dedicated endpoint
         method: 'POST',
         body: formData,
         credentials: 'include'
