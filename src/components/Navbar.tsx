@@ -14,14 +14,17 @@ const Navbar = () => {
   const { user, logout } = useAuth();
 
   const navigationItems = [
-    { name: 'Home', href: '/', icon: Home },
-    { name: 'Dashboard', href: '/dashboard', icon: Gift },
-    { name: 'Tasks', href: '/tasks', icon: CheckSquare, locked: !user?.hasDeposited },
-    { name: 'Refer Friends', href: '/refer', icon: Users },
-    { name: 'Notifications', href: '/notifications', icon: Bell },
-    { name: 'Deposit', href: '/deposit', icon: CreditCard },
-    { name: 'Withdraw', href: '/withdraw', icon: Banknote },
+    { name: 'Home', href: '/', icon: Home, public: true },
+    { name: 'Dashboard', href: '/dashboard', icon: Gift, public: false },
+    { name: 'Tasks', href: '/tasks', icon: CheckSquare, locked: !user?.hasDeposited, public: false },
+    { name: 'Refer Friends', href: '/refer', icon: Users, public: false },
+    { name: 'Notifications', href: '/notifications', icon: Bell, public: false },
+    { name: 'Deposit', href: '/deposit', icon: CreditCard, public: false },
+    { name: 'Withdraw', href: '/withdraw', icon: Banknote, public: false },
   ];
+
+  // Filter navigation items based on authentication
+  const visibleNavigationItems = user ? navigationItems : navigationItems.filter(item => item.public);
 
   const isActivePage = (href: string) => {
     if (href === '/') return location.pathname === '/';
@@ -34,7 +37,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 backdrop-blur-sm border-b border-purple-500/20 sticky top-0 z-50 shadow-lg">
+    <nav className="bg-white/95 backdrop-blur-sm border-b border-purple-200 sticky top-0 z-50 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -43,16 +46,16 @@ const Navbar = () => {
               <Gift className="h-6 w-6 text-white" />
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <h1 className="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                 DailyEarn
               </h1>
-              <p className="text-xs text-purple-300">Lucky Draw</p>
+              <p className="text-xs text-gray-600">Lucky Draw</p>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
-            {navigationItems.map((item) => {
+            {visibleNavigationItems.map((item) => {
               const Icon = item.icon;
               const isActive = isActivePage(item.href);
               const isLocked = item.locked;
@@ -63,8 +66,8 @@ const Navbar = () => {
                   to={item.href}
                   className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
                     isActive
-                      ? 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-300 border border-purple-400/30 shadow-lg'
-                      : 'text-purple-200 hover:text-white hover:bg-purple-800/30'
+                      ? 'bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 border border-purple-300 shadow-md'
+                      : 'text-gray-700 hover:text-purple-600 hover:bg-purple-50'
                   } ${isLocked ? 'opacity-60' : ''}`}
                 >
                   <Icon className="h-4 w-4" />
@@ -83,13 +86,13 @@ const Navbar = () => {
           <div className="flex items-center space-x-4">
             {/* Balance (Desktop) */}
             {user && (
-              <div className="hidden lg:flex items-center space-x-3 bg-gradient-to-r from-emerald-500/10 to-purple-500/10 px-4 py-2 rounded-xl border border-emerald-400/30 backdrop-blur-sm">
-                <Wallet className="h-4 w-4 text-emerald-400" />
+              <div className="hidden lg:flex items-center space-x-3 bg-gradient-to-r from-emerald-50 to-purple-50 px-4 py-2 rounded-xl border border-emerald-200 backdrop-blur-sm">
+                <Wallet className="h-4 w-4 text-emerald-600" />
                 <div className="text-right">
-                  <div className="text-xs text-purple-300">Total Balance</div>
-                  <div className="text-sm font-bold text-emerald-400">${(user.totalBalance || user.balance || 0).toFixed(2)}</div>
+                  <div className="text-xs text-gray-600">Total Balance</div>
+                  <div className="text-sm font-bold text-emerald-600">${(user.totalBalance || user.balance || 0).toFixed(2)}</div>
                   {process.env.NODE_ENV === 'development' && (
-                    <div className="text-xs text-purple-400">
+                    <div className="text-xs text-gray-500">
                       Current: ${user.balance?.toFixed(2) || '0.00'} + Additional: ${user.additionalBalance?.toFixed(2) || '0.00'}
                     </div>
                   )}
@@ -102,7 +105,7 @@ const Navbar = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                    <Avatar className="h-10 w-10 border-2 border-purple-400/30">
+                    <Avatar className="h-10 w-10 border-2 border-purple-300">
                       <AvatarImage src="/placeholder-avatar.jpg" alt={user.username} />
                       <AvatarFallback className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold">
                         {(user.username || user.email).charAt(0).toUpperCase()}
@@ -145,7 +148,7 @@ const Navbar = () => {
               </DropdownMenu>
             ) : (
               <div className="flex items-center space-x-2">
-                <Button variant="ghost" asChild className="text-sm text-purple-200 hover:text-white hover:bg-purple-800/30">
+                <Button variant="ghost" asChild className="text-sm text-gray-700 hover:text-purple-600 hover:bg-purple-50">
                   <Link to="/login">Sign In</Link>
                 </Button>
                 <Button asChild className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-sm shadow-lg">
@@ -168,20 +171,20 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden border-t border-purple-500/20 bg-slate-900/95 backdrop-blur-sm">
+          <div className="md:hidden border-t border-purple-200 bg-white/95 backdrop-blur-sm">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {/* Balance (Mobile) */}
               {user && (
-                <div className="flex items-center justify-between bg-gradient-to-r from-emerald-500/10 to-purple-500/10 px-4 py-3 rounded-xl border border-emerald-400/30 mb-4 backdrop-blur-sm">
+                <div className="flex items-center justify-between bg-gradient-to-r from-emerald-50 to-purple-50 px-4 py-3 rounded-xl border border-emerald-200 mb-4 backdrop-blur-sm">
                   <div className="flex items-center space-x-2">
-                    <Wallet className="h-4 w-4 text-emerald-400" />
-                    <span className="text-sm font-medium text-purple-200">Balance</span>
+                    <Wallet className="h-4 w-4 text-emerald-600" />
+                    <span className="text-sm font-medium text-gray-700">Balance</span>
                   </div>
-                  <span className="text-lg font-bold text-emerald-400">${(user.totalBalance || user.balance || 0).toFixed(2)}</span>
+                  <span className="text-lg font-bold text-emerald-600">${(user.totalBalance || user.balance || 0).toFixed(2)}</span>
                 </div>
               )}
 
-              {navigationItems.map((item) => {
+              {visibleNavigationItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = isActivePage(item.href);
                 const isLocked = item.locked;
@@ -192,8 +195,8 @@ const Navbar = () => {
                     to={item.href}
                     className={`flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                       isActive
-                        ? 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-300 border border-purple-400/30'
-                        : 'text-purple-200 hover:text-white hover:bg-purple-800/30'
+                        ? 'bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 border border-purple-300'
+                        : 'text-gray-700 hover:text-purple-600 hover:bg-purple-50'
                     } ${isLocked ? 'opacity-60' : ''}`}
                     onClick={() => setIsOpen(false)}
                   >
@@ -211,7 +214,7 @@ const Navbar = () => {
               {/* Mobile Auth Actions */}
               {!user && (
                 <div className="pt-4 space-y-2">
-                  <Button variant="ghost" asChild className="w-full justify-start text-purple-200 hover:text-white hover:bg-purple-800/30">
+                  <Button variant="ghost" asChild className="w-full justify-start text-gray-700 hover:text-purple-600 hover:bg-purple-50">
                     <Link to="/login" onClick={() => setIsOpen(false)}>
                       Sign In
                     </Link>
