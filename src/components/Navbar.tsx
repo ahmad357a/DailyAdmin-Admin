@@ -34,19 +34,19 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white/95 backdrop-blur-sm border-b border-primary/10 sticky top-0 z-50 shadow-elegant">
+    <nav className="bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 backdrop-blur-sm border-b border-purple-500/20 sticky top-0 z-50 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-            <div className="bg-gradient-primary p-2 rounded-xl shadow-glow">
+            <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-2 rounded-xl shadow-lg">
               <Gift className="h-6 w-6 text-white" />
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              <h1 className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                 DailyEarn
               </h1>
-              <p className="text-xs text-muted-foreground">Lucky Draw</p>
+              <p className="text-xs text-purple-300">Lucky Draw</p>
             </div>
           </Link>
 
@@ -63,8 +63,8 @@ const Navbar = () => {
                   to={item.href}
                   className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
                     isActive
-                      ? 'bg-gradient-to-r from-primary/10 to-accent/10 text-primary border border-primary/20 shadow-soft'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                      ? 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-300 border border-purple-400/30 shadow-lg'
+                      : 'text-purple-200 hover:text-white hover:bg-purple-800/30'
                   } ${isLocked ? 'opacity-60' : ''}`}
                 >
                   <Icon className="h-4 w-4" />
@@ -83,13 +83,13 @@ const Navbar = () => {
           <div className="flex items-center space-x-4">
             {/* Balance (Desktop) */}
             {user && (
-              <div className="hidden lg:flex items-center space-x-3 bg-gradient-to-r from-success/5 to-primary/5 px-4 py-2 rounded-xl border border-success/20">
-                <Wallet className="h-4 w-4 text-success" />
+              <div className="hidden lg:flex items-center space-x-3 bg-gradient-to-r from-emerald-500/10 to-purple-500/10 px-4 py-2 rounded-xl border border-emerald-400/30 backdrop-blur-sm">
+                <Wallet className="h-4 w-4 text-emerald-400" />
                 <div className="text-right">
-                  <div className="text-xs text-muted-foreground">Total Balance</div>
-                  <div className="text-sm font-bold text-success">${(user.totalBalance || user.balance || 0).toFixed(2)}</div>
+                  <div className="text-xs text-purple-300">Total Balance</div>
+                  <div className="text-sm font-bold text-emerald-400">${(user.totalBalance || user.balance || 0).toFixed(2)}</div>
                   {process.env.NODE_ENV === 'development' && (
-                    <div className="text-xs text-gray-500">
+                    <div className="text-xs text-purple-400">
                       Current: ${user.balance?.toFixed(2) || '0.00'} + Additional: ${user.additionalBalance?.toFixed(2) || '0.00'}
                     </div>
                   )}
@@ -102,9 +102,9 @@ const Navbar = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                    <Avatar className="h-10 w-10 border-2 border-primary/20">
+                    <Avatar className="h-10 w-10 border-2 border-purple-400/30">
                       <AvatarImage src="/placeholder-avatar.jpg" alt={user.username} />
-                      <AvatarFallback className="bg-gradient-primary text-white font-semibold">
+                      <AvatarFallback className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold">
                         {(user.username || user.email).charAt(0).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
@@ -145,10 +145,10 @@ const Navbar = () => {
               </DropdownMenu>
             ) : (
               <div className="flex items-center space-x-2">
-                <Button variant="ghost" asChild className="text-sm">
+                <Button variant="ghost" asChild className="text-sm text-purple-200 hover:text-white hover:bg-purple-800/30">
                   <Link to="/login">Sign In</Link>
                 </Button>
-                <Button asChild className="btn-primary text-sm">
+                <Button asChild className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-sm shadow-lg">
                   <Link to="/signup">Get Started</Link>
                 </Button>
               </div>
@@ -168,16 +168,16 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden border-t border-primary/10 bg-white/95 backdrop-blur-sm">
+          <div className="md:hidden border-t border-purple-500/20 bg-slate-900/95 backdrop-blur-sm">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {/* Balance (Mobile) */}
               {user && (
-                <div className="flex items-center justify-between bg-gradient-to-r from-success/5 to-primary/5 px-4 py-3 rounded-xl border border-success/20 mb-4">
+                <div className="flex items-center justify-between bg-gradient-to-r from-emerald-500/10 to-purple-500/10 px-4 py-3 rounded-xl border border-emerald-400/30 mb-4 backdrop-blur-sm">
                   <div className="flex items-center space-x-2">
-                    <Wallet className="h-4 w-4 text-success" />
-                    <span className="text-sm font-medium">Balance</span>
+                    <Wallet className="h-4 w-4 text-emerald-400" />
+                    <span className="text-sm font-medium text-purple-200">Balance</span>
                   </div>
-                  <span className="text-lg font-bold text-success">${(user.totalBalance || user.balance || 0).toFixed(2)}</span>
+                  <span className="text-lg font-bold text-emerald-400">${(user.totalBalance || user.balance || 0).toFixed(2)}</span>
                 </div>
               )}
 
@@ -192,8 +192,8 @@ const Navbar = () => {
                     to={item.href}
                     className={`flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                       isActive
-                        ? 'bg-gradient-to-r from-primary/10 to-accent/10 text-primary border border-primary/20'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                        ? 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-300 border border-purple-400/30'
+                        : 'text-purple-200 hover:text-white hover:bg-purple-800/30'
                     } ${isLocked ? 'opacity-60' : ''}`}
                     onClick={() => setIsOpen(false)}
                   >
@@ -211,12 +211,12 @@ const Navbar = () => {
               {/* Mobile Auth Actions */}
               {!user && (
                 <div className="pt-4 space-y-2">
-                  <Button variant="ghost" asChild className="w-full justify-start">
+                  <Button variant="ghost" asChild className="w-full justify-start text-purple-200 hover:text-white hover:bg-purple-800/30">
                     <Link to="/login" onClick={() => setIsOpen(false)}>
                       Sign In
                     </Link>
                   </Button>
-                  <Button asChild className="w-full btn-primary">
+                  <Button asChild className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-lg">
                     <Link to="/signup" onClick={() => setIsOpen(false)}>
                       Get Started
                     </Link>
