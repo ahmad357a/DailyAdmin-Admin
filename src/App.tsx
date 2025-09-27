@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { runAuthDiagnostic } from "@/lib/health-check";
 import Index from "./pages/Index";
 import Homepage from "./pages/homepage";
+import NewHomePage from "./pages/NewHomePage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -51,7 +52,8 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
+            <Route path="/" element={<NewHomePage />} />
+            <Route path="/old-home" element={<Index />} />
             <Route path="/homepage" element={<Homepage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
