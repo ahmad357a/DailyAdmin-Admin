@@ -217,11 +217,6 @@ Your withdrawal request has been queued and will be processed by our admin team.
       description: `Current deposit: $${requirements?.requirements.deposit.completed || 0} (minimum $10 required)`,
     },
     {
-      label: "Refer 1 confirmed friend (every 15 days)",
-      met: requirements?.requirements.referrals.met || false,
-      description: `Confirmed referrals this period: ${requirements?.requirements.referrals.completed || 0}/1 (friend must deposit $10 and have it confirmed)`,
-    },
-    {
       label: "Participate in Lucky Draw (every 15 days)",
       met: requirements?.requirements.luckyDraw.met || false,
       description: `Lucky draw participation this period: ${requirements?.requirements.luckyDraw.completed || 0}/1`,
@@ -287,7 +282,7 @@ Your withdrawal request has been queued and will be processed by our admin team.
                   </div>
                   <div className="mt-1 text-xs">
                     Your 15-day timer was reset on {new Date(requirements.resetAt).toLocaleDateString()} 
-                    because you completed both a referral and lucky draw participation. 
+                    because you completed the lucky draw participation requirement. 
                     New period ends: {new Date(requirements.periodEnd).toLocaleDateString()}.
                   </div>
                 </div>
@@ -342,7 +337,6 @@ Your withdrawal request has been queued and will be processed by our admin team.
                   <p className="font-medium mb-2">⚠️ Important: Withdrawal Requirements</p>
                   <ul className="list-disc list-inside space-y-1">
                     <li><strong>Minimum deposit:</strong> You must have deposited at least $10</li>
-                    <li><strong>Referral requirement:</strong> Refer 1 friend who deposits $10 and has it confirmed by admin every 15 days</li>
                     <li><strong>Lucky draw:</strong> Participate in the lucky draw once every 15 days</li>
                     <li className="text-red-700 font-medium"><strong>Failure to meet requirements will reset your balance to $0</strong></li>
                   </ul>
