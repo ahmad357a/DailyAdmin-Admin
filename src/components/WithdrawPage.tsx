@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label"
 import { useAuth } from "@/contexts/AuthContext"
 import { Banknote, AlertCircle, CheckCircle, X, Loader2 } from "lucide-react"
 import axios from "axios"
+import api from "@/lib/axios"
 
 interface WithdrawalRequirement {
   periodStart: string
@@ -51,8 +52,7 @@ export function WithdrawPage() {
   const fetchRequirements = async () => {
     try {
       setLoading(true)
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3005'
-      const response = await axios.get(`${apiUrl}/api/withdrawal-requirements`, { withCredentials: true })
+      const response = await api.get(`/api/withdrawal-requirements`)
       if (response.data.success) {
         setRequirements(response.data.requirements)
       }
@@ -75,8 +75,7 @@ export function WithdrawPage() {
   const fetchWithdrawals = async () => {
     try {
       setWithdrawalsLoading(true)
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3005'
-      const response = await axios.get(`${apiUrl}/api/withdrawal-history`, { withCredentials: true })
+      const response = await api.get(`/api/withdrawal-history`)
       if (response.data.success) {
         setWithdrawals(response.data.withdrawals)
       }
@@ -144,11 +143,9 @@ export function WithdrawPage() {
 
     try {
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3005'
-      const response = await axios.post(`${apiUrl}/api/withdrawal-request`, {
+      const response = await api.post(`/api/withdrawal-request`, {
         amount: Number.parseFloat(amount),
         walletAddress
-      }, {
-        withCredentials: true
       })
 
       if (response.data.success) {
