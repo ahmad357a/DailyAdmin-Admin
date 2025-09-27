@@ -101,7 +101,7 @@ export function Dashboard() {
       title: "Lucky Draw",
       description: "Try your luck",
       icon: Gift,
-      link: "/lucky-draw",
+      link: "/",
       color: "bg-pink-500",
     },
   ]
