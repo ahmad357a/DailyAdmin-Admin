@@ -56,9 +56,15 @@ const Dashboard = () => {
   const [prizes, setPrizes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const normalizeBase = (url: string) => {
+    let s = url || '';
+    while (s.endsWith('/')) s = s.slice(0, -1);
+    return s;
+  };
+
   const fetchParticipations = async () => {
     try {
-      const baseApi = (import.meta.env.VITE_API_URL || 'https://daily-earn-backend-production.up.railway.app').replace(/\/+$/, '')
+      const baseApi = normalizeBase(import.meta.env.VITE_API_URL || 'https://daily-earn-backend-production.up.railway.app')
       const response = await axios.get(`${baseApi}/api/my-participations`, { withCredentials: true });
       const participations = response.data.participations || [];
       const newStatus: { [prizeId: string]: 'none' | 'waiting' | 'submitted' | 'again' } = {};
@@ -87,7 +93,7 @@ const Dashboard = () => {
   const fetchLuckyDraws = async () => {
     try {
       setLoading(true);
-      const baseApi = (import.meta.env.VITE_API_URL || 'https://daily-earn-backend-production.up.railway.app').replace(/\/+$/, '')
+      const baseApi = normalizeBase(import.meta.env.VITE_API_URL || 'https://daily-earn-backend-production.up.railway.app')
       const response = await axios.get(`${baseApi}/api/lucky-draws`);
       const luckyDraws = response.data.luckyDraws || [];
       
@@ -142,7 +148,7 @@ const Dashboard = () => {
     // Fetch notifications
     const fetchNotifications = async () => {
       try {
-        const baseApi = (import.meta.env.VITE_API_URL || 'https://daily-earn-backend-production.up.railway.app').replace(/\/+$/, '')
+        const baseApi = normalizeBase(import.meta.env.VITE_API_URL || 'https://daily-earn-backend-production.up.railway.app')
         const response = await axios.get(`${baseApi}/api/user/notifications`, { withCredentials: true });
         const notificationsData = response.data.notifications || [];
         // Add id and read status to notifications
@@ -213,7 +219,7 @@ const Dashboard = () => {
     try {
       // Use the new lucky draw participation endpoint with receipt image
       await axios.post(
-        `${(import.meta.env.VITE_API_URL || 'https://daily-earn-backend-production.up.railway.app').replace(/\/+$/, '')}/api/lucky-draws/${selectedPrize?.id}/participate`,
+        `${normalizeBase(import.meta.env.VITE_API_URL || 'https://daily-earn-backend-production.up.railway.app')}/api/lucky-draws/${selectedPrize?.id}/participate`,
         {
           walletAddress: binanceUID, // Using binanceUID as wallet address for now
           receiptUrl: entryUploadUrl // Include the uploaded receipt image URL
