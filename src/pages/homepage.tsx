@@ -528,6 +528,7 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+/* DUPLICATE BLOCK DISABLED BELOW
 
 
         {showNotification && (
@@ -1047,5 +1048,4 @@ export default Dashboard;
 
 
 export default Dashboard;
-
-
+/*
