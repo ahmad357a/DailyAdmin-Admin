@@ -137,12 +137,12 @@ const Signup = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-purple-100 flex items-center justify-center p-4">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-10 w-20 h-20 bg-secondary/10 rounded-full animate-float"></div>
-        <div className="absolute top-40 right-20 w-16 h-16 bg-primary/10 rounded-full animate-float" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute bottom-40 left-20 w-12 h-12 bg-accent/10 rounded-full animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-20 left-10 w-20 h-20 bg-purple-200/30 rounded-full animate-float"></div>
+        <div className="absolute top-40 right-20 w-16 h-16 bg-pink-200/30 rounded-full animate-float" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-40 left-20 w-12 h-12 bg-purple-300/30 rounded-full animate-float" style={{ animationDelay: '2s' }}></div>
       </div>
 
       <div className="w-full max-w-md relative z-10">
@@ -150,20 +150,20 @@ const Signup = () => {
         <Button
           variant="ghost"
           onClick={() => navigate('/')}
-          className="mb-6 text-white/80 hover:text-white hover:bg-white/10"
+          className="mb-6 text-gray-700 hover:text-purple-600 hover:bg-purple-50"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Home
         </Button>
 
-        <Card className="shadow-large border-white/20 bg-white/95 backdrop-blur-sm">
+        <Card className="shadow-xl border-purple-200 bg-white/95 backdrop-blur-sm">
           <CardHeader className="text-center space-y-4">
-            <div className="mx-auto bg-gradient-primary p-3 rounded-2xl w-fit">
+            <div className="mx-auto bg-gradient-to-r from-purple-500 to-pink-500 p-3 rounded-2xl w-fit shadow-lg">
               <Gift className="h-8 w-8 text-white" />
             </div>
             <div>
-              <CardTitle className="text-2xl font-bold">Join EasyEarn</CardTitle>
-              <CardDescription className="text-muted-foreground">
+              <CardTitle className="text-2xl font-bold text-gray-800">Join DailyEarn</CardTitle>
+              <CardDescription className="text-gray-600">
                 Start winning amazing prizes today!
               </CardDescription>
             </div>
@@ -171,13 +171,13 @@ const Signup = () => {
 
           <CardContent>
             {/* Benefits */}
-            <div className="bg-primary/5 rounded-xl p-4 mb-6">
-              <h3 className="font-semibold text-foreground mb-3">What you'll get:</h3>
+            <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-4 mb-6 border border-purple-200">
+              <h3 className="font-semibold text-gray-800 mb-3">What you'll get:</h3>
               <div className="grid grid-cols-2 gap-2">
                 {benefits.map((benefit, index) => (
                   <div key={index} className="flex items-center space-x-2">
-                    <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
-                    <span className="text-sm text-muted-foreground">{benefit}</span>
+                    <CheckCircle className="h-4 w-4 text-purple-600 flex-shrink-0" />
+                    <span className="text-sm text-gray-600">{benefit}</span>
                   </div>
                 ))}
               </div>
@@ -296,7 +296,7 @@ const Signup = () => {
                   )}
                 </div>
                 {referrerName && (
-                  <div className="text-sm text-green-600 space-y-1">
+                  <div className="text-sm text-emerald-600 space-y-1">
                     <p>✓ Valid referral code! You'll be referred by {referrerName}</p>
                   </div>
                 )}
@@ -313,13 +313,13 @@ const Signup = () => {
                   checked={agreeToTerms}
                   onCheckedChange={(checked) => setAgreeToTerms(checked as boolean)}
                 />
-                <Label htmlFor="terms" className="text-sm text-muted-foreground">
+                <Label htmlFor="terms" className="text-sm text-gray-600">
                   I agree to the{' '}
-                  <Link to="/terms" className="text-primary hover:underline">
+                  <Link to="/terms" className="text-purple-600 hover:underline">
                     Terms of Service
                   </Link>{' '}
                   and{' '}
-                  <Link to="/privacy" className="text-primary hover:underline">
+                  <Link to="/privacy" className="text-purple-600 hover:underline">
                     Privacy Policy
                   </Link>
                 </Label>
@@ -327,7 +327,7 @@ const Signup = () => {
 
               <Button 
                 type="submit" 
-                className="w-full btn-primary h-12 text-lg"
+                className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white h-12 text-lg font-semibold shadow-lg transition-all duration-300"
                 disabled={isLoading}
               >
                 {isLoading ? "Creating Account..." : "Create Account"}
@@ -335,11 +335,11 @@ const Signup = () => {
             </form>
 
             <div className="mt-6 text-center">
-              <p className="text-muted-foreground">
+              <p className="text-gray-600">
                 Already have an account?{' '}
                 <Link
                   to="/login"
-                  className="text-primary hover:text-primary-dark font-medium transition-colors"
+                  className="text-purple-600 hover:text-purple-700 font-medium transition-colors"
                 >
                   Sign in here
                 </Link>
