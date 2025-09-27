@@ -14,7 +14,7 @@ const Navbar = () => {
   const { user, logout } = useAuth();
 
   const navigationItems = [
-    { name: 'Home', href: '/', icon: Home, public: true },
+    { name: 'Home', href: '/', icon: Home, public: false },
     { name: 'Dashboard', href: '/dashboard', icon: Gift, public: false },
     { name: 'Tasks', href: '/tasks', icon: CheckSquare, locked: !user?.hasDeposited, public: false },
     { name: 'Refer Friends', href: '/refer', icon: Users, public: false },
@@ -24,7 +24,7 @@ const Navbar = () => {
   ];
 
   // Filter navigation items based on authentication
-  const visibleNavigationItems = user ? navigationItems : navigationItems.filter(item => item.public);
+  const visibleNavigationItems = user ? navigationItems : [];
 
   const isActivePage = (href: string) => {
     if (href === '/') return location.pathname === '/';
