@@ -41,10 +41,10 @@ export function TaskPage() {
   const fetchTasks = async () => {
     try {
       setLoading(true)
-      const apiUrl = (import.meta.env.VITE_API_URL || 'https://daily-earn-backend-production.up.railway.app')
-      console.log('Fetching tasks from:', `${apiUrl}/api/tasks`)
+      const baseApi = (import.meta.env.VITE_API_URL || 'https://daily-earn-backend-production.up.railway.app').replace(/\/+$/, '')
+      console.log('Fetching tasks from:', `${baseApi}/api/tasks`)
       
-      const response = await axios.get(`${apiUrl}/api/tasks`, {
+      const response = await axios.get(`${baseApi}/api/tasks`, {
         withCredentials: true
       })
       
@@ -80,10 +80,10 @@ export function TaskPage() {
       setUploadingScreenshot(true)
       const formData = new FormData()
       formData.append('screenshot', file) // Changed from 'file' to 'screenshot'
-      const apiUrl = (import.meta.env.VITE_API_URL || 'https://daily-earn-backend-production.up.railway.app')
+      const baseApi = (import.meta.env.VITE_API_URL || 'https://daily-earn-backend-production.up.railway.app').replace(/\/+$/, '')
 
       const response = await axios.post(
-        `${apiUrl}/api/upload-task-screenshot`, // Using dedicated endpoint
+        `${baseApi}/api/upload-task-screenshot`, // Using dedicated endpoint
         formData,
         {
           withCredentials: true,
@@ -112,10 +112,10 @@ export function TaskPage() {
 
     try {
       setSubmittingTask(selectedTask.id)
-      const apiUrl = (import.meta.env.VITE_API_URL || 'https://daily-earn-backend-production.up.railway.app')
+      const baseApi = (import.meta.env.VITE_API_URL || 'https://daily-earn-backend-production.up.railway.app').replace(/\/+$/, '')
       
       const response = await axios.post(
-        `${apiUrl}/api/tasks/${selectedTask.id}/submit`,
+        `${baseApi}/api/tasks/${selectedTask.id}/submit`,
         submitForm,
         { withCredentials: true }
       )
