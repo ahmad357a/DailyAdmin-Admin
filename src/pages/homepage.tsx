@@ -183,16 +183,16 @@ const Dashboard = () => {
     setSelectedPrize(prize);
   };
 
-  // Handle file upload for Participate Now using dedicated Cloudinary endpoint
+  // Handle file upload for Participate Now using dedicated lucky draw receipt endpoint
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setReceipt(e.target.files[0]);
       setIsUploadingEntry(true);
       const formData = new FormData();
-      formData.append('entry', e.target.files[0]); // Changed from 'file' to 'entry'
+      formData.append('receipt', e.target.files[0]); // Use 'receipt' for lucky draw receipts
       try {
         const response = await axios.post(
-          `${normalizeBase(import.meta.env.VITE_API_URL || 'https://daily-earn-backend-production.up.railway.app')}/api/upload-homepage-entry`,
+          `${normalizeBase(import.meta.env.VITE_API_URL || 'https://daily-earn-backend-production.up.railway.app')}/api/upload-lucky-draw-receipt`,
           formData,
           { 
             headers: { 'Content-Type': 'multipart/form-data' },
@@ -200,11 +200,11 @@ const Dashboard = () => {
           }
         );
         setEntryUploadUrl(response.data.url);
-        console.log('Homepage entry uploaded to Cloudinary:', response.data.url);
-        toast({ title: 'Entry uploaded!', description: 'File uploaded successfully to Cloudinary.' });
+        console.log('Lucky draw receipt uploaded to Cloudinary:', response.data.url);
+        toast({ title: 'Receipt uploaded!', description: 'Receipt uploaded successfully to Cloudinary.' });
       } catch (error: any) {
-        console.error('Homepage entry upload error:', error);
-        const errorMessage = error.response?.data?.error || 'Could not upload file. Please try again.';
+        console.error('Lucky draw receipt upload error:', error);
+        const errorMessage = error.response?.data?.error || 'Could not upload receipt. Please try again.';
         toast({ title: 'Upload failed', description: errorMessage, variant: 'destructive' });
         setEntryUploadUrl(null);
       } finally {
@@ -474,8 +474,29 @@ const Dashboard = () => {
                             </Label>
                             {isUploadingEntry && <div className="text-xs text-muted-foreground">Uploading...</div>}
                             {entryUploadUrl && (
-                              <div className="mt-2">
-                                <a href={entryUploadUrl} target="_blank" rel="noopener noreferrer" className="text-primary underline">View Uploaded Receipt</a>
+                              <div className="mt-2 space-y-2">
+                                <div className="text-xs text-green-600 font-medium">✓ Receipt uploaded successfully!</div>
+                                <div className="flex items-center space-x-2">
+                                  <img 
+                                    src={entryUploadUrl} 
+                                    alt="Receipt preview" 
+                                    className="w-16 h-16 object-cover rounded border"
+                                    onError={(e) => {
+                                      e.currentTarget.style.display = 'none';
+                                    }}
+                                  />
+                                  <div className="flex-1">
+                                    <a 
+                                      href={entryUploadUrl} 
+                                      target="_blank" 
+                                      rel="noopener noreferrer" 
+                                      className="text-primary underline text-sm hover:text-primary-dark"
+                                    >
+                                      View Full Receipt
+                                    </a>
+                                    <div className="text-xs text-muted-foreground">Click to open in new tab</div>
+                                  </div>
+                                </div>
                               </div>
                             )}
                           </div>
