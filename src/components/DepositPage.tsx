@@ -24,11 +24,11 @@ export function DepositPage() {
   const [isUploading, setIsUploading] = useState(false)
   const [isLoadingDeposits, setIsLoadingDeposits] = useState(false)
 
-  const binanceAddress = "1048420929"
+  const walletAddress = "6d1787e75b8fee77ec8fcd8b1333c27f"
   const minDeposit = 10
 
   const handleCopyAddress = () => {
-    navigator.clipboard.writeText(binanceAddress)
+    navigator.clipboard.writeText(walletAddress)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
@@ -169,7 +169,7 @@ export function DepositPage() {
         amount: Number.parseFloat(amount),
         receiptUrl: finalReceiptUrl,
         transactionHash: transactionHash.trim() || undefined,
-        notes: `Deposit via Binance address: ${binanceAddress}`
+        notes: `Deposit via BEP20/ERC20 address: ${walletAddress}`
       }
 
       const response = await depositService.createDeposit(depositData)
@@ -211,7 +211,7 @@ export function DepositPage() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Deposit Funds</h1>
-        <p className="text-gray-600 mt-2">Add funds to your account using Binance</p>
+        <p className="text-gray-600 mt-2">Add funds to your account using BEP20 or ERC20 network</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -222,7 +222,7 @@ export function DepositPage() {
               <CreditCard className="h-5 w-5 mr-2" />
               Make a Deposit
             </CardTitle>
-            <CardDescription>Only Binance transfers accepted | Contact: easyeanses@gmail.com</CardDescription>
+            <CardDescription>BEP20 or ERC20 network transfers accepted | Contact: easyeanses@gmail.com</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-2">
@@ -247,9 +247,9 @@ export function DepositPage() {
             </div>
 
             <div className="space-y-2">
-              <Label>Binance Wallet Address</Label>
+              <Label>Wallet Address (BEP20 or ERC20)</Label>
               <div className="flex items-center space-x-2">
-                <Input value={binanceAddress} readOnly className="font-mono text-sm" />
+                <Input value={walletAddress} readOnly className="font-mono text-sm" />
                 <Button
                   variant="outline"
                   size="sm"
@@ -312,10 +312,10 @@ export function DepositPage() {
 
             <div className="space-y-2">
               <Label htmlFor="transactionHash">Transaction Hash (Optional)</Label>
-              <Input
+                <Input
                 id="transactionHash"
                 type="text"
-                placeholder="TRC20 transaction hash"
+                placeholder="BEP20 or ERC20 transaction hash"
                 value={transactionHash}
                 onChange={(e) => setTransactionHash(e.target.value)}
               />
@@ -330,11 +330,11 @@ export function DepositPage() {
                 <div className="text-sm text-yellow-800">
                   <p className="font-medium mb-1">Important Instructions:</p>
                   <ul className="list-disc list-inside space-y-1">
-                    <li>Only send USDT (TRC-20) to this address</li>
+                    <li>Only send USDT via BEP20 or ERC20 network to this address</li>
                     <li><strong>First $10 deposit unlocks tasks but doesn't add to balance</strong></li>
                     <li>Subsequent deposits add to your balance normally</li>
                     <li>Deposits are processed within 10-30 minutes</li>
-                    <li>Double-check the address before sending</li>
+                    <li>Double-check the address and network before sending</li>
                     <li>Contact support: easyeanses@gmail.com</li>
                   </ul>
                 </div>
