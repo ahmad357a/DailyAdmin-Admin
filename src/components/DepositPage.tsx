@@ -18,7 +18,6 @@ export function DepositPage() {
   const [isProcessing, setIsProcessing] = useState(false)
   const [copied, setCopied] = useState(false)
   const [deposits, setDeposits] = useState<Deposit[]>([])
-  const [transactionHash, setTransactionHash] = useState("")
   const [uploadedImage, setUploadedImage] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [isUploading, setIsUploading] = useState(false)
@@ -168,7 +167,6 @@ export function DepositPage() {
       const depositData = {
         amount: Number.parseFloat(amount),
         receiptUrl: finalReceiptUrl,
-        transactionHash: transactionHash.trim() || undefined,
         notes: `Deposit via BEP20/ERC20 address: ${walletAddress}`
       }
 
@@ -180,7 +178,6 @@ export function DepositPage() {
           description: "Deposit request submitted successfully! It will be reviewed and confirmed shortly."
         })
         setAmount("")
-        setTransactionHash("")
         setUploadedImage(null)
         setImagePreview(null)
         await loadDeposits() // Refresh deposit list
@@ -308,20 +305,6 @@ export function DepositPage() {
                   </div>
                 )}
               </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="transactionHash">Transaction Hash (Optional)</Label>
-                <Input
-                id="transactionHash"
-                type="text"
-                placeholder="BEP20 or ERC20 transaction hash"
-                value={transactionHash}
-                onChange={(e) => setTransactionHash(e.target.value)}
-              />
-              <p className="text-sm text-gray-600">
-                If you have the transaction hash, include it for faster processing
-              </p>
             </div>
 
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
